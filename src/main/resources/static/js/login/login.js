@@ -18,7 +18,6 @@ let login = function () {
       alert("비밀번호를 입력하세요.");
       return;
     } else {
-      alert("로그인성공 확인용");
       form_login.submit();
     }
   });

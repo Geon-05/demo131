@@ -56,7 +56,7 @@ public class LoginController {
       session.setAttribute("loginId", loginMember.getId());
       session.setAttribute("loginName", loginMember.getName());
 
-      return "redirect:/";
+      return "redirect:/book/bookList";
     } else {
       model.addAttribute("msg", "아이디 비밀번호를 확인해주세요.");
       return "/common/msg";
