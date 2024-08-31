@@ -14,6 +14,9 @@ import com.example.demo131.dto.SearchDto;
 import com.example.demo131.service.BookService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -32,5 +35,28 @@ public class BookController {
     
       return "/book/list";
   }
+
+  @GetMapping("/book/bookInsert")
+  public String getMethodName() {
+      return "/book/insert";
+  }
+  
+  @PostMapping("/book/bookInsertAction")
+  public String postMethodName(
+    BookDto book
+    , Model model
+  ) {
+      int res = service.insertBook(book);
+
+      if (res > 0) {
+        model.addAttribute("msg", "도서등록이 완료되었습니다.");
+        model.addAttribute("url", "/book/bookInsert");
+        return "/common/msg";
+      } else {
+        model.addAttribute("msg", "입력중 예외가 발생했습니다.");
+        return "/common/msg";
+      }
+  }
+  
   
 }

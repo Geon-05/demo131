@@ -79,17 +79,17 @@
     <ul class="pagination justify-content-center">
       <th:block th:if="${pageDto.prev}">
       <li class="page-item">
-        <a class="page-link" th:onclick="go([[${pageDto.startPage-1}]])">◀</a>
+        <a class="page-link" th:onclick="go(${pageDto.startPage-1})">◀</a>
       </li>
     </th:block>
       <th:block th:each="index:${#numbers.sequence(pageDto.startPage,pageDto.endPage)}">
       <li class="page-item">
-        <a class="page-link" th:text="${index}" th:onclick="go([[${index}]])"></a>
+        <a class="page-link" th:text="${index}" th:onclick="go(${index})"></a>
       </li>
     </th:block>
        <th:block th:if="${pageDto.next}">
       <li class="page-item">
-        <a class="page-link" th:onclick="go([[${pageDto.endPage+1}]])">▶</a>
+        <a class="page-link" th:onclick="go(${pageDto.endPage+1})">▶</a>
       </li>
     </th:block>
     </ul>
