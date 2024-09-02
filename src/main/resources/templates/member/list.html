@@ -21,26 +21,21 @@
 </style>
 <script>
   function go(pageNo){
-    searchForm.pageNo.value=pageNo;
+    searchForm.pageNo.value = pageNo;
     searchForm.submit();
   }
 </script>
 </head>
 <body>
-  <header th:insert="~{/common/templatesBuild::navi}">
-    
-  </header>
+  <header th:insert="~{/common/templatesBuild::navi}"></header>
   <main th:with="list=${map.list}, pageDto=${map.pageDto}">
   <!-- 타이틀 -->
-  <p><h2>도서목록</h2></p>
+  <h2>사용자목록</h2>
   <!-- 검색 -->
   <hr>
   <form name="searchForm" action="/member/memberList" method="get">
-    pageNo: <input type="text" name="pageNo" value="1" id="pageNo" th:value="${param.pageNo?:'1'}">
-    amount: <input type="text" name="amount" value="10" id="amount" th:value="${param.amount?:'10'}">
-    <br>
-    searchField: <input type="text" name="searchField" value="1" id="searchField">
-    searchWord: <input type="text" name="searchWord" value="10" id="searchWord">
+    pageNo: <input type="text" name="pageNo" id="pageNo" th:value="${pageDto.searchDto.pageNo}">
+    amount: <input type="text" name="amount" id="amount" th:value="${pageDto.searchDto.amount}">
     <br>
     <button>조회</button>
   </form>
@@ -68,7 +63,7 @@
             <th scope="row" th:text="${member.mem_no}"></th>
             <td>
               <a
-                th:href="@{/member/detail(mem_no=${member.mem_no})}"
+                th:href="@{/member/memberDetail(mem_no=${member.mem_no})}"
                 th:text="${member.name}"
                 ></a
               >
@@ -82,26 +77,7 @@
   </table>
   
   
-  <!-- 페이지네이션 -->
-  <nav aria-label="...">
-    <ul class="pagination justify-content-center">
-      <th:block th:if="${pageDto.prev}">
-      <li class="page-item">
-        <a class="page-link" th:onclick="go([[${pageDto.startPage-1}]])">◀</a>
-      </li>
-    </th:block>
-      <th:block th:each="index:${#numbers.sequence(pageDto.startPage,pageDto.endPage)}">
-      <li class="page-item">
-        <a class="page-link" th:text="${index}" th:onclick="go([[${index}]])"></a>
-      </li>
-    </th:block>
-       <th:block th:if="${pageDto.next}">
-      <li class="page-item">
-        <a class="page-link" th:onclick="go([[${pageDto.endPage+1}]])">▶</a>
-      </li>
-    </th:block>
-    </ul>
-  </nav>
+  <nav th:insert="~{/common/templatesBuild::pagenation}"></nav>
   </main>
   <footer th:insert="~{/common/templatesBuild::footer}">
     

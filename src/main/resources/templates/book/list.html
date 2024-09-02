@@ -12,6 +12,12 @@
     />
     <link rel="stylesheet" href="/css/book/list.css" />
     <script src="/js/book/list.js"></script>
+    <script th:inline="javascript">
+      function go(pageNo) {
+        searchForm.pageNo.value = pageNo;
+        searchForm.submit();
+      }
+    </script>
   </head>
   <body>
     <header th:insert="~{/common/templatesBuild::navi}"></header>
@@ -21,7 +27,27 @@
       <!-- 검색 -->
       <hr />
       <form name="searchForm" action="/book/bookList" method="get">
-        <!-- 검색필드-->
+        pageNo:
+        <input
+          type="text"
+          name="pageNo"
+          id="pageNo"
+          th:value="${map.pageDto.searchDto.pageNo}"
+        />
+        amount:
+        <input
+          type="text"
+          name="amount"
+          id="amount"
+          th:value="${map.pageDto.searchDto.amount}"
+        />
+        <br />
+        <button>조회</button>
+      </form>
+
+      <hr />
+      <!-- 검색필드-->
+      <form name="searchForm" action="/book/bookList" method="get">
         <div class="input-group" id="searchBox">
           <select class="form-select" name="searchField">
             <option value="title" selected>도서명</option>
@@ -38,7 +64,6 @@
               등록일
             </option>
           </select>
-          <!-- 검색어 -->
           <input
             type="text"
             class="form-control"
@@ -57,6 +82,7 @@
           </button>
         </div>
       </form>
+      
       <hr />
 
       <!-- 도서목록 -->
@@ -81,7 +107,7 @@
                 <th scope="row" th:text="${book.book_no}"></th>
                 <td>
                   <a
-                    th:href="@{/book/detail(book_no=${book.book_no})}"
+                    th:href="@{/book/bookDetail(book_no=${book.book_no})}"
                     th:text="${book.title}"
                   ></a>
                 </td>
@@ -93,34 +119,7 @@
         </tbody>
       </table>
 
-      <!-- 페이지네이션 -->
-      <form name="pagenationForm" action="/book/bookList" method="get">
-        <nav aria-label="...">
-          <ul class="pagination justify-content-center">
-            <th:block th:if="${pageDto.prev}">
-              <li class="page-item">
-                <a class="page-link" id="btn_prev">◀</a>
-              </li>
-            </th:block>
-            <th:block
-              th:each="index:${#numbers.sequence(pageDto.startPage,pageDto.endPage)}"
-            >
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  th:text="${index}"
-                  th:onclick="go_page([[${index}]])"
-                ></a>
-              </li>
-            </th:block>
-            <th:block th:if="${pageDto.next}">
-              <li class="page-item">
-                <a class="page-link" id="btn_next">▶</a>
-              </li>
-            </th:block>
-          </ul>
-        </nav>
-      </form>
+      <nav th:insert="~{/common/templatesBuild::pagenation}"></nav>
     </main>
     <footer th:insert="~{/common/templatesBuild::footer}"></footer>
 

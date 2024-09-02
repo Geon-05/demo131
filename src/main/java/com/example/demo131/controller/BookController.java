@@ -37,12 +37,12 @@ public class BookController {
   }
 
   @GetMapping("/book/bookInsert")
-  public String getMethodName() {
+  public String bookInsert() {
       return "/book/insert";
   }
   
   @PostMapping("/book/bookInsertAction")
-  public String postMethodName(
+  public String bookInsert(
     BookDto book
     , Model model
   ) {
@@ -58,5 +58,9 @@ public class BookController {
       }
   }
   
+  @GetMapping("/book/bookDetail")
+  public String bookDetail() {
+      return "/book/detail";
+  }
   
 }
